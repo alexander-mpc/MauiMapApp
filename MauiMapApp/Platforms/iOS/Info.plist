@@ -28,5 +28,12 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+
+	<key>CFBundleIdentifier</key>
+	<string>de.mpcsoftware.taris-passenger-3333</string>
+	<key>CFBundleDisplayName</key>
+	<string>MPC Map Test</string>
+	<key>CFBundleName</key>
+	<string>MPC Map Test</string>
 </dict>
 </plist>

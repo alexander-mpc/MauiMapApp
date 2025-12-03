@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui;
-using Microsoft.Extensions.Logging;
-using Syncfusion.Maui.Toolkit.Hosting;
+﻿using Microsoft.Extensions.Logging;
 
 namespace MauiMapApp
 {
@@ -11,23 +9,12 @@ namespace MauiMapApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
-                .ConfigureSyncfusionToolkit()
+                .UseMauiMaps()
                 .ConfigureMauiHandlers(handlers =>
                 {
-#if WINDOWS
-    				Microsoft.Maui.Controls.Handlers.Items.CollectionViewHandler.Mapper.AppendToMapping("KeyboardAccessibleCollectionView", (handler, view) =>
-    				{
-    					handler.PlatformView.SingleSelectionFollowsFocus = false;
-    				});
-
-    				Microsoft.Maui.Handlers.ContentViewHandler.Mapper.AppendToMapping(nameof(Pages.Controls.CategoryChart), (handler, view) =>
-    				{
-    					if (view is Pages.Controls.CategoryChart && handler.PlatformView is Microsoft.Maui.Platform.ContentPanel contentPanel)
-    					{
-    						contentPanel.IsTabStop = true;
-    					}
-    				});
+#if IOS
+                    // Map
+                    handlers.AddHandler<Microsoft.Maui.Controls.Maps.Map, CustomMapHandler>();
 #endif
                 })
                 .ConfigureFonts(fonts =>
@@ -42,19 +29,6 @@ namespace MauiMapApp
     		builder.Logging.AddDebug();
     		builder.Services.AddLogging(configure => configure.AddDebug());
 #endif
-
-            builder.Services.AddSingleton<ProjectRepository>();
-            builder.Services.AddSingleton<TaskRepository>();
-            builder.Services.AddSingleton<CategoryRepository>();
-            builder.Services.AddSingleton<TagRepository>();
-            builder.Services.AddSingleton<SeedDataService>();
-            builder.Services.AddSingleton<ModalErrorHandler>();
-            builder.Services.AddSingleton<MainPageModel>();
-            builder.Services.AddSingleton<ProjectListPageModel>();
-            builder.Services.AddSingleton<ManageMetaPageModel>();
-
-            builder.Services.AddTransientWithShellRoute<ProjectDetailPage, ProjectDetailPageModel>("project");
-            builder.Services.AddTransientWithShellRoute<TaskDetailPage, TaskDetailPageModel>("task");
 
             return builder.Build();
         }

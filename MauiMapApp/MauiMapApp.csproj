@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
@@ -21,11 +21,11 @@
 		<NoWarn>NU1608</NoWarn>
 		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
 
-		<!-- Display name -->
+		<!-- Display name --><!--
 		<ApplicationTitle>MauiMapApp</ApplicationTitle>
 
-		<!-- App Identifier -->
-		<ApplicationId>com.companyname.mauimapapp</ApplicationId>
+		--><!-- App Identifier --><!--
+		<ApplicationId>com.companyname.mauimapapp</ApplicationId>-->
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -39,6 +39,20 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)'=='net10.0-ios'">
+	  <ProvisioningType>automatic</ProvisioningType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
+	  <MtouchLink>SdkOnly</MtouchLink>
+	  <!-- <MtouchLink>None</MtouchLink> This one is a working solution -->
+	  <MtouchDebug>True</MtouchDebug>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
+	  <MtouchDebug>True</MtouchDebug>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -58,17 +72,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.11" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="10.0.11" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.11" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="11.1.1" />
-		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.8" />
-		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
-		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.7" />
+		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.0" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Pages\MapPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 	
 </Project>
