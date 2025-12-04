@@ -9,6 +9,8 @@ namespace MauiMapApp
 
         protected override void ConnectHandler(MauiMKMapView platformView)
         {
+            base.ConnectHandler(platformView);
+
             // Disable interactions
             platformView.RotateEnabled = false;
             platformView.PitchEnabled = false;
@@ -40,8 +42,6 @@ namespace MauiMapApp
             platformView.RegionChanged += PlatformView_RegionChanged;
 
             platformView.DidChangeVisibleRegion += PlatformView_DidChangeVisibleRegion;
-
-            base.ConnectHandler(platformView);
         }
 
 
